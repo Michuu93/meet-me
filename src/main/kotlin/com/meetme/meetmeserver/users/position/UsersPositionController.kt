@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import reactor.core.scheduler.Schedulers
 
 @RestController
 @RequestMapping("/position")
@@ -24,7 +25,10 @@ class UsersPositionController(val userPositionService: UsersPositionService) {
             userPositionService.findAll()
 
     @PostMapping
-    fun save(@RequestBody userPosition: UserPosition): Mono<UserPosition> {
-        return userPositionService.save(userPosition)
+    fun save(@RequestBody userPosition: UserPosition): Mono<Void> {
+        userPositionService.save(userPosition)
+                .subscribeOn(Schedulers.elastic())
+                .subscribe() // fire and forget
+        return Mono.empty()
     }
 }
