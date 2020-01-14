@@ -5,4 +5,5 @@ spring:
     password:
 logging:
   level:
+    com.meetme.meetmeserver: DEBUG
     org.springframework.data.r2dbc: TRACE

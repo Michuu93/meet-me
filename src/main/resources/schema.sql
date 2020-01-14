@@ -12,5 +12,5 @@ CREATE TABLE IF NOT EXISTS USER_POSITION
     user_id          VARCHAR(36)  NOT NULL PRIMARY KEY,
     latitude         DOUBLE,
     longitude        DOUBLE,
-    last_activity    NUMBER       NOT NULL
+    position_timestamp    NUMBER       NOT NULL
 );

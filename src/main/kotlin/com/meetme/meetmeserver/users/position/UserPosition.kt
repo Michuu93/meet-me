@@ -1,5 +1,6 @@
 package com.meetme.meetmeserver.users.position
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Transient
 import org.springframework.data.domain.Persistable
@@ -9,13 +10,15 @@ data class UserPosition(
         var userId: String,
         var latitude: Double,
         var longitude: Double,
-        var lastActivity: Number?
-): Persistable<String> {
+        var positionTimestamp: Number
+) : Persistable<String> {
     @Transient
     private var isFirstPosition: Boolean = false
 
+    @JsonIgnore
     override fun getId(): String? = userId
 
+    @JsonIgnore
     override fun isNew(): Boolean = isFirstPosition
 
     /**
