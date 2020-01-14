@@ -14,20 +14,21 @@ class UsersPositionService(val userPositionRepository: UserPositionRepository) {
 
     fun findById(userId: String): Mono<UserPosition> = userPositionRepository.findById(userId)
 
-    fun save(userPosition: UserPosition) =
-            userPositionRepository.findById(userPosition.userId).doOnNext {
-                log.debug("Actual user position: $it")
-                if (userPosition.positionTimestamp.toDouble() > it.positionTimestamp.toDouble()) {
-                    log.debug("New user position: $userPosition")
-                    userPositionRepository.save(userPosition).subscribe()
-                } else {
-                    log.debug("New user position is older than actual")
-                }
-            }.switchIfEmpty(Mono.defer {
-                log.debug("First user position: $userPosition")
-                userPosition.markAsNew()
-                userPositionRepository.save(userPosition)
-            })
+    fun save(userPosition: UserPosition): Mono<UserPosition> {
+        return userPositionRepository.findById(userPosition.userId).doOnNext {
+            log.debug("Actual user position: $it")
+            if (userPosition.positionTimestamp.toDouble() > it.positionTimestamp.toDouble()) {
+                log.debug("New user position: $userPosition")
+                userPositionRepository.save(userPosition).subscribe()
+            } else {
+                log.debug("New user position is older than actual")
+            }
+        }.switchIfEmpty(Mono.defer {
+            log.debug("First user position: $userPosition")
+            userPosition.markAsNew()
+            userPositionRepository.save(userPosition)
+        })
+    }
 
     fun findAll(): Flux<UserPosition> = userPositionRepository.findAll()
 }
