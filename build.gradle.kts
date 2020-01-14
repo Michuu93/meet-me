@@ -15,6 +15,7 @@ ext["h2.version"] = "1.4.199" // workaround for https://github.com/r2dbc/r2dbc-h
 repositories {
     mavenCentral()
     maven { url = uri("https://repo.spring.io/milestone") }
+    maven { url = uri("http://oss.jfrog.org/artifactory/oss-snapshot-local") }
 }
 
 dependencies {
@@ -26,8 +27,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     runtimeOnly("io.r2dbc:r2dbc-h2")
 
-    compile("io.springfox:springfox-swagger2:2.9.2")
-    compile("io.springfox:springfox-swagger-ui:2.9.2")
+    compile("io.springfox:springfox-swagger2:3.0.0-SNAPSHOT")
+    compile("io.springfox:springfox-swagger-ui:3.0.0-SNAPSHOT")
+    compile("io.springfox:springfox-spring-webflux:3.0.0-SNAPSHOT")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")

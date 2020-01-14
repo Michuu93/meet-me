@@ -17,7 +17,6 @@ class UserService(val userRepository: UserRepository) {
     }
 
     fun save(user: User): Mono<User> {
-        user.lastActivity = System.currentTimeMillis()
         if (user.userId == null) {
             user.userId = UUID.randomUUID().toString()
             user.markAsNew()
