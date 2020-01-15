@@ -10,7 +10,7 @@ data class UserPosition(
         var userId: String,
         var latitude: Double,
         var longitude: Double,
-        var positionTimestamp: Number
+        var positionTimestamp: Double
 ) : Persistable<String> {
     @Transient
     private var isFirstPosition: Boolean = false

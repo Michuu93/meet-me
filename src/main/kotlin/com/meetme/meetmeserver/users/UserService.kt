@@ -1,13 +1,11 @@
 package com.meetme.meetmeserver.users
 
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.util.*
 
 @Service
-@Transactional
 class UserService(val userRepository: UserRepository) {
 
     fun findById(userId: String): Mono<User> = userRepository.findById(userId)
@@ -23,4 +21,6 @@ class UserService(val userRepository: UserRepository) {
         }
         return userRepository.save(user)
     }
+
+    fun delete(id: String): Mono<Void> = userRepository.deleteById(id)
 }
