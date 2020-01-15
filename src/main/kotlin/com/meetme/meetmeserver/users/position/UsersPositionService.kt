@@ -8,16 +8,16 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Service
-@Transactional
 class UsersPositionService(val userPositionRepository: UserPositionRepository) {
     private val log: Logger = LoggerFactory.getLogger(this::class.java)
 
     fun findById(userId: String): Mono<UserPosition> = userPositionRepository.findById(userId)
 
+    @Transactional
     fun save(userPosition: UserPosition): Mono<UserPosition> {
         return userPositionRepository.findById(userPosition.userId).doOnNext {
             log.debug("Actual user position: $it")
-            if (userPosition.positionTimestamp.toDouble() > it.positionTimestamp.toDouble()) {
+            if (userPosition.positionTimestamp > it.positionTimestamp) {
                 log.debug("New user position: $userPosition")
                 userPositionRepository.save(userPosition).subscribe()
             } else {

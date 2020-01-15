@@ -10,7 +10,9 @@ data class User(
         var userId: String?,
         var userName: String,
         var userDescription: String?,
-        var userStatus: String?
+        var userStatus: String?,
+        var gender: String?,
+        var photo: ByteArray?
 ) : Persistable<String> {
     @Transient
     private var isNewUser: Boolean = false

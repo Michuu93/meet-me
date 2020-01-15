@@ -2,6 +2,7 @@ package com.meetme.meetmeserver.users
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.server.ResponseStatusException
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -21,5 +22,17 @@ class UserController(val userService: UserService) {
     fun findAll(): Flux<User> = userService.findAll()
 
     @PostMapping
-    fun save(@RequestBody user: User): Mono<User> = userService.save(user)
+    fun save(@RequestPart user: User,
+             @RequestPart("photo", required = false) photo: MultipartFile?): Mono<User> {
+        photo?.let {
+            user.photo = it.bytes
+        }
+        return userService.save(user)
+    }
+
+//    @PostMapping
+//    fun save(@RequestPart user: User): Mono<User> = userService.save(user)
+
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable id: String): Mono<Void> = userService.delete(id)
 }
