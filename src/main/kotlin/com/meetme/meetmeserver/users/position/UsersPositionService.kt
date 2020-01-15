@@ -31,4 +31,7 @@ class UsersPositionService(val userPositionRepository: UserPositionRepository) {
     }
 
     fun findAll(): Flux<UserPosition> = userPositionRepository.findAll()
+
+    fun findAllActiveAfter(positionTimestamp: Double): Flux<UserPosition> =
+            userPositionRepository.findAllAfterTimestamp(positionTimestamp)
 }

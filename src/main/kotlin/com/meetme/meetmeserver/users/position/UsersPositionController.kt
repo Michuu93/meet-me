@@ -24,6 +24,10 @@ class UsersPositionController(val userPositionService: UsersPositionService) {
     fun findAll(): Flux<UserPosition> =
             userPositionService.findAll()
 
+    @GetMapping("/active/{positionTimestamp}")
+    fun findAllActiveAfter(@PathVariable positionTimestamp: Double): Flux<UserPosition> =
+            userPositionService.findAllActiveAfter(positionTimestamp)
+
     @PostMapping
     fun save(@RequestBody userPosition: UserPosition): Mono<Void> {
         userPositionService.save(userPosition)
