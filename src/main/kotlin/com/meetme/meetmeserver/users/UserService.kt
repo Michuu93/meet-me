@@ -13,7 +13,7 @@ class UserService(val userRepository: UserRepository) {
     fun findAll(): Flux<User> = userRepository.findAll()
 
 
-    fun findAllByIds(ids: List<String>): Flux<User> =
+    fun findAllById(ids: List<String>): Flux<User> =
             userRepository.findAllById(ids)
 
     fun save(user: User): Mono<User> {
