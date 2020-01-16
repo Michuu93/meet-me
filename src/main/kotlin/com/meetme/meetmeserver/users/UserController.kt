@@ -26,7 +26,7 @@ class UserController(val userService: UserService) {
     }
 
 //    @PostMapping
-//    fun save(@RequestPart user: User): Mono<User> = userService.save(user)
+//    fun save(@RequestBody user: User): Mono<User> = userService.save(user)
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: String): Mono<Void> = userService.delete(id)
