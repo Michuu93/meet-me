@@ -10,6 +10,6 @@ class UsersController(val userService: UserService) {
     fun findAll(): Flux<User> = userService.findAll()
 
     @PostMapping
-    fun findAllByIds(@RequestBody ids: List<String>) =
-            userService.findAllByIds(ids)
+    fun findAllById(@RequestBody ids: List<String>) =
+            userService.findAllById(ids)
 }
