@@ -10,9 +10,11 @@ class UserService(val userRepository: UserRepository) {
 
     fun findById(userId: String): Mono<User> = userRepository.findById(userId)
 
-    fun findAll(): Flux<User> {
-        return userRepository.findAll()
-    }
+    fun findAll(): Flux<User> = userRepository.findAll()
+
+
+    fun findAllByIds(ids: List<String>): Flux<User> =
+            userRepository.findAllById(ids)
 
     fun save(user: User): Mono<User> {
         if (user.userId == null) {
