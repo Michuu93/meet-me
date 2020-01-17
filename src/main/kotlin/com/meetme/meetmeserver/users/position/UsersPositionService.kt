@@ -10,9 +10,13 @@ import reactor.core.publisher.Mono
 class UsersPositionService(val userPositionRepository: UserPositionRepository) {
     private val log: Logger = LoggerFactory.getLogger(this::class.java)
 
-    fun findById(userId: String): Mono<UserPosition> = userPositionRepository.findById(userId)
+    fun findById(userId: String): Mono<UserPosition> {
+        log.trace("UsersPositionService.findById [userId=$userId]")
+        return userPositionRepository.findById(userId)
+    }
 
     fun save(userPosition: UserPosition): Mono<UserPosition> {
+        log.trace("UsersPositionService.save")
         return userPositionRepository.findById(userPosition.userId).doOnNext {
             log.debug("Actual user position: $it")
             if (userPosition.positionTimestamp > it.positionTimestamp) {
@@ -28,8 +32,13 @@ class UsersPositionService(val userPositionRepository: UserPositionRepository) {
         })
     }
 
-    fun findAll(): Flux<UserPosition> = userPositionRepository.findAll()
+    fun findAll(): Flux<UserPosition> {
+        log.trace("UsersPositionService.findAll")
+        return userPositionRepository.findAll()
+    }
 
-    fun findAllActiveAfter(positionTimestamp: Double): Flux<UserPosition> =
-            userPositionRepository.findAllAfterTimestamp(positionTimestamp)
+    fun findAllActiveAfter(positionTimestamp: Double): Flux<UserPosition> {
+        log.trace("UsersPositionService.findAllActiveAfter [positionTimestamp=$positionTimestamp]")
+        return userPositionRepository.findAllAfterTimestamp(positionTimestamp)
+    }
 }

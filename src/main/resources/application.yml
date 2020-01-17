@@ -6,5 +6,5 @@ spring:
 
 logging:
   level:
-    com.meetme.meetmeserver: DEBUG
+    com.meetme.meetmeserver: TRACE
     org.springframework.data.r2dbc: TRACE
