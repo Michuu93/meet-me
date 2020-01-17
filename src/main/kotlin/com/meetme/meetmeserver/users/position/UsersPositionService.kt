@@ -3,7 +3,6 @@ package com.meetme.meetmeserver.users.position
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
@@ -17,10 +16,10 @@ class UsersPositionService(val userPositionRepository: UserPositionRepository) {
         return userPositionRepository.findById(userPosition.userId).doOnNext {
             log.debug("Actual user position: $it")
             if (userPosition.positionTimestamp > it.positionTimestamp) {
-                log.debug("New user position: $userPosition")
+                log.info("New user position: $userPosition")
                 userPositionRepository.save(userPosition).subscribe()
             } else {
-                log.debug("New user position is older than actual")
+                log.warn("New user position is older than actual")
             }
         }.switchIfEmpty(Mono.defer {
             log.debug("First user position: $userPosition")

@@ -16,7 +16,11 @@ class UserController(val userService: UserService) {
                             "User with userId=$id not found")))
 
     @PostMapping
-    fun save(@RequestBody user: User): Mono<User> = userService.save(user)
+    fun save(@RequestBody user: User): Mono<User> = userService.save(user).switchIfEmpty(
+            Mono.error(
+                    ResponseStatusException(
+                            HttpStatus.UNPROCESSABLE_ENTITY,
+                            "User has not been saved")))
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: String): Mono<Void> = userService.delete(id)
