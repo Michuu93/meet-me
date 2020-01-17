@@ -13,7 +13,6 @@ class UsersPositionService(val userPositionRepository: UserPositionRepository) {
 
     fun findById(userId: String): Mono<UserPosition> = userPositionRepository.findById(userId)
 
-    @Transactional
     fun save(userPosition: UserPosition): Mono<UserPosition> {
         return userPositionRepository.findById(userPosition.userId).doOnNext {
             log.debug("Actual user position: $it")
