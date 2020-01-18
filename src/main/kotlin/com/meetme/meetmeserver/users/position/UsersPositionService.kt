@@ -3,6 +3,7 @@ package com.meetme.meetmeserver.users.position
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
@@ -15,6 +16,7 @@ class UsersPositionService(val userPositionRepository: UserPositionRepository) {
         return userPositionRepository.findById(userId)
     }
 
+    @Transactional
     fun save(userPosition: UserPosition): Mono<UserPosition> {
         log.trace("UsersPositionService.save")
         return userPositionRepository.findById(userPosition.userId).doOnNext {
